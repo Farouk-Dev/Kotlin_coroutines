@@ -53,13 +53,16 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    val imageUrl= URL("http://ichef.bbci.co.uk/onesport/cps/480/cpsprodpb/11136/production/_95324996_defoe_rex.jpg")
-    val connection = imageUrl.openConnection() as HttpURLConnection
-    connection.doInput=true
-    connection.connect()
+    Thread(Runnable {
+      val imageUrl= URL("http://ichef.bbci.co.uk/onesport/cps/480/cpsprodpb/11136/production/_95324996_defoe_rex.jpg")
+      val connection = imageUrl.openConnection() as HttpURLConnection
+      connection.doInput=true
+      connection.connect()
 
-    val inputStream=connection.inputStream
-    val bitmap=BitmapFactory.decodeStream(inputStream)
-    image.setImageBitmap(bitmap)
+      val inputStream=connection.inputStream
+      val bitmap=BitmapFactory.decodeStream(inputStream)
+      image.setImageBitmap(bitmap)
+    }).start()
+
   }
 }
