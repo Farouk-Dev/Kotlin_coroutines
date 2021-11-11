@@ -39,6 +39,8 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.image
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -54,18 +56,19 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    val mainLooper=mainLooper
+    val mainLooper = mainLooper
 
-    Thread(Runnable {
-      val imageUrl= URL("http://ichef.bbci.co.uk/onesport/cps/480/cpsprodpb/11136/production/_95324996_defoe_rex.jpg")
+    GlobalScope.launch {
+      val imageUrl = URL(
+        "http://ichef.bbci.co.uk/onesport/cps/480/cpsprodpb/11136/production/_95324996_defoe_rex.jpg"
+      )
       val connection = imageUrl.openConnection() as HttpURLConnection
-      connection.doInput=true
+      connection.doInput = true
       connection.connect()
 
-      val inputStream=connection.inputStream
-      val bitmap=BitmapFactory.decodeStream(inputStream)
-      Handler(mainLooper).post { image.setImageBitmap(bitmap)}
-    }).start()
-
+      val inputStream = connection.inputStream
+      val bitmap = BitmapFactory.decodeStream(inputStream)
+      Handler(mainLooper).post { image.setImageBitmap(bitmap) }
+    }
   }
 }
