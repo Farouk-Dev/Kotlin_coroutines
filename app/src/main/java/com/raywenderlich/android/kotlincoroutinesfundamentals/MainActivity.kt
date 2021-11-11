@@ -34,8 +34,12 @@
 
 package com.raywenderlich.android.kotlincoroutinesfundamentals
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.image
+import java.net.HttpURLConnection
+import java.net.URL
 
 /**
  * Main Screen
@@ -49,6 +53,13 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    // Your code
+    val imageUrl= URL("http://ichef.bbci.co.uk/onesport/cps/480/cpsprodpb/11136/production/_95324996_defoe_rex.jpg")
+    val connection = imageUrl.openConnection() as HttpURLConnection
+    connection.doInput=true
+    connection.connect()
+
+    val inputStream=connection.inputStream
+    val bitmap=BitmapFactory.decodeStream(inputStream)
+    image.setImageBitmap(bitmap)
   }
 }
