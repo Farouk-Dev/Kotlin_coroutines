@@ -39,6 +39,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.image
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.net.HttpURLConnection
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     val mainLooper = mainLooper
 
-    GlobalScope.launch {
+    GlobalScope.launch(context = Dispatchers.IO) {
       val imageUrl = URL(
         "http://ichef.bbci.co.uk/onesport/cps/480/cpsprodpb/11136/production/_95324996_defoe_rex.jpg"
       )
