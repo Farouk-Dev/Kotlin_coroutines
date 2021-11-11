@@ -57,8 +57,6 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    val mainLooper = mainLooper
-
     GlobalScope.launch(context = Dispatchers.IO) {
       val imageUrl = URL(
         "http://ichef.bbci.co.uk/onesport/cps/480/cpsprodpb/11136/production/_95324996_defoe_rex.jpg"
@@ -69,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
       val inputStream = connection.inputStream
       val bitmap = BitmapFactory.decodeStream(inputStream)
-      Handler(mainLooper).post { image.setImageBitmap(bitmap) }
+      launch(context = Dispatchers.Main) { image.setImageBitmap(bitmap) }
     }
   }
 }
