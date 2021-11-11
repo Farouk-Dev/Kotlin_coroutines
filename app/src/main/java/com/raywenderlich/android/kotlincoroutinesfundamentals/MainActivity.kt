@@ -36,6 +36,7 @@ package com.raywenderlich.android.kotlincoroutinesfundamentals
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.image
 import java.net.HttpURLConnection
@@ -53,6 +54,8 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
+    val mainLooper=mainLooper
+
     Thread(Runnable {
       val imageUrl= URL("http://ichef.bbci.co.uk/onesport/cps/480/cpsprodpb/11136/production/_95324996_defoe_rex.jpg")
       val connection = imageUrl.openConnection() as HttpURLConnection
@@ -61,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
       val inputStream=connection.inputStream
       val bitmap=BitmapFactory.decodeStream(inputStream)
-      runOnUiThread { image.setImageBitmap(bitmap)}
+      Handler(mainLooper).post { image.setImageBitmap(bitmap)}
     }).start()
 
   }
